@@ -1,8 +1,0 @@
-cmake_minimum_required(VERSION 3.20)
-project(MyCppScripts)
-
-set(CMAKE_CXX_STANDARD 17)
-
-# Add one executable per standalone script
-add_executable(HelloWorld HelloWorld.cpp)
-add_executable(TestMath TestMath.cpp)
