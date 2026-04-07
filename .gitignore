@@ -1,0 +1,14 @@
+# JetBrains Rider
+.idea/
+
+# CMake build folders
+cmake-build-*/
+build/
+
+# Compiled files
+*.exe
+*.out
+*.o
+*.obj
+*.dll
+*.pdb
