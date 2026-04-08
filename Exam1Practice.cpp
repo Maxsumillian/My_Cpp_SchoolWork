@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 // Exam Practice 1
 
@@ -20,7 +21,7 @@ class Student {
 		int getStudentID()		{	return studentID;		}
 		int getCreditHours()	{	return creditHours;	}
 		std::string getTrack()	{	return track;		}
-		std::string getTiming()	{	return timing;		}
+		std::string getTiming()	{	return timing;		}// admitted early ontime or late
 		bool getOnline()		{	return online;		}
 		
 		
@@ -75,7 +76,7 @@ class Charge{
 		
 	
 		float operator-(float discountPercentage){
-			return charge * discountPercentage;
+			return charge * discountPercentage *-1;
 		}
 		
 		float operator+(float discountPercentage){
@@ -99,7 +100,80 @@ std::ostream& operator<<(std::ostream& o, Charge oneCharge)
 }
 
 
+class Invoice{
+	private:
+		Student student;
+		std::vector<Charge> allCharges;
+		double totalAmountDue;
+		
+	public:
+		Invoice(int studentID, int creditHours, std::string track, std::string timing, bool online)
+			:student(studentID, creditHours, track, timing, online)
+			{
+				this->totalAmountDue = 0;
+			}
+			
+		Charge chargePerCredit(std::string track)
+		{
+			//Charge oneCharge();
+			
+			if(track == "general certification")
+				return 	Charge("general certification", 180);//creates and returns a charge object 
+				
+			if(track == "undergraduate")
+				return 	Charge("undergraduate per credit", 320);
+				
+			if(track == "graduate")
+				return 	Charge("graduate per credit", 450);
+				
+			if(track == "professional")
+				return 	Charge("professional per credit", 650);
+			
+			return Charge("invalide track",0);
+		}
+		
+		//creats charges from student track and adds to allcharges vecotor
+		void compute(){
+			
+			Charge perCredit = chargePerCredit(student.getTrack());
+			
+			allCharges.push_back(perCredit);
+			
+//			allCharges.push_back(chargePerCredit(student.getTrack());
+			
+			
+			Charge baseTuition = perCredit * student.getCreditHours();
+			allCharges.push_back(baseTuition);
+			
+			if(student.getTiming() == "early")
+			{
+				Charge early("Early registartion discount", baseTuition-.5);
+				allCharges.push_back(early);
+				
+			} else if (student.getTiming() == "late")
+			{
+				Charge late("Early registartion discount", baseTuition+.12);
+				allCharges.push_back(late);
+			}
+			
+			for (int x = 1; x < allCharges.size(); x++)
+				totalAmountDue += allCharges[x].getCharge();
+			
+			//shoulnt use a range-based loop beacause we need to start at one
+//			for(Charge oneCharge : allChanges)
+//				total += oneCharge.getAmount();
 
+			if (student.getOnline())
+			{
+				double discount = totalAmountDue * .15;
+				
+				Charge onlineDiscount("Online discount", discount);
+				allCharges.push_back(onlineDiscount);
+				totalAmountDue -= discount;
+			}
+			
+		}
+};
 
 
 
@@ -112,8 +186,15 @@ int main(){
 	std::cout<<"\n"<<newCharge-discountPercent;//retunrs 100 beacuse 10*10 is 100
 	std::cout<<"\n"<<newCharge+discountPercent;
 	
-	Charge newCharge2 = newCharge*(10);
+	Charge newCharge2 = newCharge*10;
 	std::cout<<"\n"<<newCharge2.getCharge();
+	
+	newCharge2 = newCharge2*10;
+	std::cout<<"\n"<<newCharge2;
+	newCharge2 = newCharge2*10;
+	std::cout<<"\n"<<newCharge2;
+	newCharge2 = newCharge2*10;
+	std::cout<<"\n"<<newCharge2;
 	
 	return 0;
 }
