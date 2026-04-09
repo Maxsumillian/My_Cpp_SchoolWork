@@ -1,7 +1,19 @@
-#include <iostream>
+#include <iostream>//this stands for input output stream
 #include <vector>
 
 // Exam Practice 1
+
+
+
+
+
+
+
+
+// std::cout<<obj1;
+// cout is a object from a ostream class
+
+
 
 class Student {
 
@@ -15,17 +27,18 @@ class Student {
 	
 	public:
 		Student(int studentID, int creditHours, std::string track, std::string timing, bool online)
-			:studentID(studentID), creditHours(creditHours), track(track), timing(timing), online(online)
+			:studentID(studentID), creditHours(creditHours), track(track), timing(timing), online(online)//initialaztion list
 			{}
 				
 		int getStudentID()		{	return studentID;		}
 		int getCreditHours()	{	return creditHours;	}
 		std::string getTrack()	{	return track;		}
-		std::string getTiming()	{	return timing;		}// admitted early ontime or late
+		std::string getTiming()	{	return timing;		}// admitted "early" "ontime" or "late"
 		bool getOnline()		{	return online;		}
 		
 		
-		void setStudentID(int studentID){
+		void setStudentID(int studentID)
+		{
 			this->studentID = studentID;
 		}
 		void setCreditHours(int creditHours){
@@ -40,33 +53,34 @@ class Student {
 		void setOnline	(bool online){
 			this->online = online;
 		}	
-			
 		
-				
+		std::string display()
+		{
+			return "Student ID#: " + studentID;
+		}
+			
 };
-
-
-
 
 class Charge{
 	
 	friend std::ostream& operator<<(std::ostream&, Charge oneCharge);
+//	friend Charge operator+(Charge c, Charge i);
 	
 	private:
 		std::string label;
-		double charge;
+		double amount;
 		
 		
 	public:
-		Charge(std::string label, double charge)
-		:label(label), charge(charge)
+		Charge(std::string label, double amount)
+		:label(label), amount(amount)
 		{}
-		
-
+				
+		//accsessor 
 		std::string getLabel()	{	return label;	}
-		double getCharge()	{	return charge;	}
+		double getCharge()	{	return amount;	}
 		
-		
+		//mutators
 		void setLabel(std::string label){
 			this->label = label;
 		}
@@ -74,30 +88,34 @@ class Charge{
 			this->label = label;
 		}
 		
-	
+		//overloaded operators | [Charge] - (float) returns [amount * discountPercentage *-1]
 		float operator-(float discountPercentage){
-			return charge * discountPercentage *-1;
+			return amount * discountPercentage *-1;
 		}
 		
 		float operator+(float discountPercentage){
-			return charge * discountPercentage;
+			return amount * discountPercentage;
 		}
 	
-		//returning a charge class inside the class
+		//returning a Charge class inside the class
 		Charge operator*(int credits){
 			
-			Charge oneCharge("Base Tuition", this->charge*credits);
-			
-			return oneCharge;
+			return Charge("Base Tuition", this->amount*credits);
 			
 		}
-	
+		
 };
+
+//Charge operator+(Charge c, Charge i)
+//{
+//	return Charge(c.label + i.label, c.amount + i.amount );
+//}
 
 std::ostream& operator<<(std::ostream& o, Charge oneCharge)
 {
-	o<<oneCharge.label<<" \t $ "<<oneCharge.charge;	
+	o<<oneCharge.label<<" \t $ "<<oneCharge.amount;	
 }
+
 
 
 class Invoice{
@@ -134,7 +152,8 @@ class Invoice{
 		
 		//creats charges from student track and adds to allcharges vecotor
 		void compute(){
-			
+			//we create a Charge class called perCredit that is equal to the function "chargePerCredit" that returns a Charge
+			// that needs a student track to make its Charge tbased on the track and we get the student track from the student inn this invoice class that is needed for initialization o finvoice
 			Charge perCredit = chargePerCredit(student.getTrack());
 			
 			allCharges.push_back(perCredit);
@@ -173,28 +192,76 @@ class Invoice{
 			}
 			
 		}
+		
+		void display()
+			{
+				student.display();
+				
+				for (Charge oneCharge : allCharges)
+					std::cout<<oneCharge;
+					
+				//conditinal operator/tertinary operator [condition]?[true]:[false];
+				std::cout<<( totalAmountDue > 9000.00 ? std::cout<<"Please contact the register": 
+											   std::cout<<"Your semester bill is $"<< totalAmountDue);
+				
+			}
+	
 };
 
 
+//static int +++(int a)
+//{
+//	return a + 1 + 1 + 1;
+//}
+
+
+
+//===========================================================================================================
+//refrenceses change the actual value likea  pointer so it sgood to change multiple values
+void inputData(int& credits, int& studentID)
+{
+	//input with data validation	
+}
+
+bool inputOnline()
+{
+	// no need to validate but ask yes or no
+	//return (answer == "yes");
+}
+//===========================================================================================================
 
 int main(){
 	
-	Charge newCharge("payment", 10);
+	//int a = 1;
+//	a++;
 	
-	float discountPercent = .10;
-	
-	std::cout<<"\n"<<newCharge-discountPercent;//retunrs 100 beacuse 10*10 is 100
-	std::cout<<"\n"<<newCharge+discountPercent;
-	
-	Charge newCharge2 = newCharge*10;
-	std::cout<<"\n"<<newCharge2.getCharge();
-	
-	newCharge2 = newCharge2*10;
-	std::cout<<"\n"<<newCharge2;
-	newCharge2 = newCharge2*10;
-	std::cout<<"\n"<<newCharge2;
-	newCharge2 = newCharge2*10;
-	std::cout<<"\n"<<newCharge2;
+//	Charge newCharge("payment", 10);
+//	
+//	float discountPercent = .10;
+//	
+//	std::cout<<"\n"<<newCharge-discountPercent;//retunrs 100 beacuse 10*10 is 100
+//	std::cout<<"\n"<<newCharge+discountPercent;
+//	
+//	Charge newCharge2 = newCharge*10;
+//	std::cout<<"\n"<<newCharge2.getCharge();
+//	
+//	newCharge2 = newCharge2*10;
+//	std::cout<<"\n"<<newCharge2;
+//	newCharge2 = newCharge2*10;
+//	std::cout<<"\n"<<newCharge2;
+//	newCharge2 = newCharge2*10;
+//	std::cout<<"\n"<<newCharge2;
+
+//	call inputData();
+//	ask for string data for track and timing usign a getline();
+
+//	call allOnline(); to get if its online
+
+//	 create invoice
+//	Invoice newInvoice(StrudentID,CreditHours,track,online);
+
+//	newInvoice.compute();
+//	newInvoice.display();
 	
 	return 0;
 }
