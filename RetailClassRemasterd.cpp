@@ -48,13 +48,13 @@ public:
 	int getReorderQuantity() const { return reorderQuantity; }
 };
 
+// I should make a toolbox of scalable input with built-in input validation
 void clearInputBuffer()
 {
 	std::cin.clear();
 	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
-// I should make a toolbox of scalable input with built-in input validation
 int getValidatedInt(std::string prompt)
 {
 	int value;
