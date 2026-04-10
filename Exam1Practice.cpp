@@ -96,7 +96,8 @@ class Charge{
 
 std::ostream& operator<<(std::ostream& o, Charge oneCharge)
 {
-	o<<oneCharge.label<<" \t $ "<<oneCharge.charge;	
+	o<<oneCharge.label<<" \t $ "<<oneCharge.charge;
+	return o; //dont forget to return o beacuse even if we are using a refrence this funciton is missign a return type and can break unless we tunr it into a void function
 }
 
 
