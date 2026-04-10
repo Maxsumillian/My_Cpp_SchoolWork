@@ -39,6 +39,49 @@ std::ostream& operator<<(std::ostream& o, StudentAthlete athlete) {
     return o;
 };
 
+
+class Athlete {
+    friend std::ostream& operator<<(std::ostream& o, Athlete athlete);
+    private:
+        std::string firstName;
+        std::string lastName;
+        std::string sport;
+        // static float athleticFees;// we made this static because it belongs to this class not each instance of the class so changing this changes all of them for all instances of this class
+        static inline float athleticFees = 125.5;// you can use "inline" cleaner version to set the initial value
+
+    public:
+        Athlete(std::string firstName, std::string lastName, std::string sport)
+            :firstName(firstName), lastName(lastName), sport(sport) {}
+
+        bool operator==(std::string sport) {
+                return this->sport == sport;
+        }
+};
+
+std::ostream& operator<<(std::ostream& o, Athlete athlete) {
+    o<<"Sport : "<<athlete.sport<<"| Name: "<<athlete.firstName<<" "<<athlete.lastName;
+    return o;
+};
+
+
+// float Athlete::athleticFees = 125.5;// set the initial athletic fee this is a definition and isn't considered access
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 int main() {
 
     //testing
