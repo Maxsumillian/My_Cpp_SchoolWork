@@ -44,6 +44,7 @@ std::ostream& operator<<(std::ostream& o, Student student) {
 
 class Athlete {
     friend std::ostream& operator<<(std::ostream& o, Athlete athlete);
+    friend void addStudent(std::vector<Student>& students, std::vector<Athlete>& athletes);
     private:
         std::string firstName;
         std::string lastName;
@@ -80,20 +81,27 @@ void displayMenu() {
     std::cout<<"\n7: Exit program";
 }
 
-void addStudent(std::vector<Student> students, std::vector<Athlete> athletes) {
+void addStudent(std::vector<Student>& students, std::vector<Athlete>& athletes) {
     std::string firstName = getValidatedString("What is the first name : ");
     std::string lastName = getValidatedString("What is the last name : ");
     int grade = getValidatedInt("What is the grade : ");
+
+    //creates studnet opbject
+    Student student(firstName, lastName, grade);
+
     if (getValidatedBool("Does the student play Sports", "yes", "no")) {
         //if they play sports then ask for name of sport and add to athletic vector and altheic fee on a loop incase they play more than one sport
 
-        while (true)
-        {
+        while (true) {
             std::string sport = getValidatedString("What sport does the student play: ");
 
-            // add sport to vector here
-            // athleticSports.push_back(sport);
-            // add fee
+
+            Athlete athlete(firstName, lastName, sport);
+
+            student += Athlete::athleticFees;
+
+            athletes.push_back(athlete);
+
 
             if (!getValidatedBool("Does the student play any additional sports?", "yes", "no"))
             {
@@ -103,17 +111,74 @@ void addStudent(std::vector<Student> students, std::vector<Athlete> athletes) {
         }
 
     }
-
     //add student to student vector
+    students.push_back(student);
 
 }
 
 
 
+void displayStudents(std::vector<Student> students) {
+    std::cout<<"\nStudent list:\n";
+    for (Student student : students) {
+        std::cout<<"\n"<<student;
+    }
+    std::cout<<"\n";
+}
 
+//right now is case-sensitive can modify later but by using the overload funciton i will have to figure out a way around
+void displayOneStudent(std::vector<Student> students, std::string displayName) {
+    bool found = false;
+    for (Student student : students) {
+        if (student == displayName) {
+            std::cout<<"\nStudent Found ";
+            std::cout<<"\n"<<student;
+            found = true;
+        }
+    }
+    if (!found)
+        std::cout<<"\nNo Student Found";
+}
 
+void displayAthlete(std::vector<Athlete> athletes) {
+    std::cout<<"\nStudent list:\n";
+    for (Athlete athlete : athletes) {
+        std::cout<<"\n"<<athlete;
+    }
+    std::cout<<"\n";
+}
 
+void displayStudentsByGrade(std::vector<Student> students) {
+    bool found = false;
+    int grade = getValidatedInt("Enter Grade : ");
+    std::cout<<"\nStudent list by selected Grade:\n";
+    for (Student student : students) {
+        if (student == grade){
+            std::cout<<"\n"<<student;
+            found = true;
+        }
+    }
+    if (!found)
+        std::cout<<"\nNo Student Found";
+    std::cout<<"\n";
 
+}
+
+void displayStudentBySport(std::vector<Athlete> athletes) {
+    bool found = false;
+    std::string sport = getValidatedString("Enter Sport : ");
+    std::cout<<"\nStudent list by selected Sport:\n";
+    for (Athlete athlete : athletes) {
+        if (athlete == sport){
+            std::cout<<"\n"<<athlete;
+            found = true;
+        }
+    }
+    if (!found)
+        std::cout<<"\nNo Student Found";
+    std::cout<<"\n";
+
+}
 
 
 
@@ -124,7 +189,7 @@ void addStudent(std::vector<Student> students, std::vector<Athlete> athletes) {
 int main() {
 
     // //testing
-    // Student max("Max","Yang",24), will("will","Yang",19);
+    Student max("Max","Yang",24), will("will","Yang",19);
     // //
     // std::cout<< max <<"\n"<< will;
     // // // std::cout<< will;
@@ -146,28 +211,32 @@ int main() {
     std::vector<Student> students;
     std::vector<Athlete> athletes;
 
+    students.push_back(max);
+    students.push_back(will);
+
+
     int menuInput;
     while (menuInput != 7) {
         displayMenu();
-        menuInput = getValidatedInt("\n : ");
+        menuInput = getValidatedInt("\nSelection : ");
         switch (menuInput) {
             case 1://adds student
-
+                addStudent(students,athletes);
                 break;
             case 2://prints all enrolled students
-
+                displayStudents(students);
                 break;
             case 3://prints all students by last name
-
+                displayOneStudent(students, getValidatedString("Enter last Name of Student : "));
                 break;
             case 4://prints all students who play sports
-
+                displayAthlete(athletes);
                 break;
             case 5://prints all students by grade
-
+                displayStudentsByGrade(students);
                 break;
             case 6://prints all students by sport
-
+                displayStudentBySport(athletes);
                 break;
         }
     }
