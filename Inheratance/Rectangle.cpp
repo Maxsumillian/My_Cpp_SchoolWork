@@ -7,9 +7,11 @@ void Rectangle::setData(int lenght, int width){
 }
 
 void Rectangle::show(){
-	std::cout<<"Dimensions: "<<lenght<<" x "<< width;
+	counter++;
+	std::cout<<"\nNum of Counter: "<<counter<<"\nDimensions: "<<lenght<<" x "<< width;
 }
 
 int Rectangle::compute(){
+//	counter++;
 	return lenght * width;
-}
+};

@@ -1,6 +1,10 @@
 #ifndef RECTANGLE_H
 #define RECTANGLE_H
 
+static int counter = 0;// declaring and using staic vairbel in parent file uses extern
+//extern in number;
+
+
 class Rectangle
 {
 	// private vs protected
