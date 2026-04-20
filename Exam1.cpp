@@ -257,35 +257,32 @@ int main(){
     }
     
     
-    //=============================//unfinishhed 
-    if(choice == 1)
-    {
-    	for (int x = 0; x < animals.size(); x++)
-		{
-			if(animals[x].getCategory == "Mammal")//unfinishhed 
-				std::cout<<animals[x];
-		}
-	}
-	if(choice == 2)
-    {
-    	for (int x = 0; x < animals.size(); x++)
-		{
-			if(animals[x].getCategory == "Bird")
-				std::cout<<animals[x];
-		}
-	
-	}
-	if(choice == 3)
-    {
-    	for (int x = 0; x < animals.size(); x++)
-		{
-			if(animals[x].getCategory == "Reptile")
-				std::cout<<animals[x];
-		}
-	
-	}
+//    =============================//unfinishhed 
+//    if(choice == 1)
+//    {
+//    	for (int x = 0; x < animals.size(); x++)
+//		{
+//			if(animals[x].getCategory == "Mammal")//unfinishhed 
+//				std::cout<<animals[x];
+//		}
+//	}
+//	if(choice == 2)
+//    {
+//    	for (int x = 0; x < animals.size(); x++)
+//		{
+//			if(animals[x].getCategory == "Bird")
+//				std::cout<<animals[x];
+//		}
+//	
+//	}
+//	if(choice == 3)
+//    {
+//    	for (int x = 0; x < animals.size(); x++)
+//		{
+//			if(animals[x].getCategory == "Reptile")
+//				std::cout<<animals[x];
+//		}
+//	
+//	}
 
-
-
-	
 }
